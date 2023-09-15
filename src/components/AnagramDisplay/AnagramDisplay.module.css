@@ -1,0 +1,59 @@
+.letters {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    font-size: x-large;
+    max-width:100%;
+    margin:0 auto;
+}   
+
+.letters input {
+    margin: .5rem .05rem;
+    border-radius: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 1.5rem;
+
+}
+
+.aform {
+    display:flex;
+    flex-direction: column;
+    background: linear-gradient(180deg,  #f57905, #f2b26e);
+    border-radius: 4px;
+    max-width: 40vw;
+    margin: .25rem auto;
+    text-align: center;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: .75rem;
+    overflow-wrap: break-word;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .aform {
+        max-width: 70vw;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .aform {
+        max-width: 90vw;
+        font-size: .5rem;
+        padding: .25rem;
+    }
+    .letters input {
+        width: 1.25rem;
+        font-size: .75rem;
+        margin: .5rem .005rem;
+    }
+  }
