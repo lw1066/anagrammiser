@@ -6,7 +6,7 @@ export const GetDefinitionHelper = async (value, errorHandler) => {
     try {
       const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${value}`);
         if (!response.ok) { 
-            throw new Error(`There aren't any results for that collection of letters (${response.status})`)
+            throw new Error(`There aren't any results for that word (${response.status})`)
         };
 
       const data = await response.json();

@@ -1,60 +1,34 @@
+ import { CustomError } from '../UI/ErrorModal/CustomError';
 
-import { HasSameLetters } from './HasSameLetters';
-
-
-// const cheatLookUpHandler = async (cheatWord, letters) => {
-    // USES DICTIONARY.TXT LIST OF WORDS STORED LOCALLY IN JSON
-    // const sortedCheatWord = letters.sort().join('')
-    // const pattern = cheatWord.map((letter) => (letter === '' ? '.' : letter));
-    // const regexPattern = pattern.join('');
-    // const regex = new RegExp(`^${regexPattern}$`, 'i');
-    // let cheatData = []
-
-    // for (let i = 0; i < output.length; i++) {
-    //   const wordArray = output[i];
-    //   if (wordArray[i].length === cheatWord.length) {
-    //     for (const word of wordArray) {
-    //       if (regex.test(word) && HasSameLetters(word, sortedCheatWord)) {
-    //         cheatData.push(word)
-    //       }
-    //     }
-    //     setCheatData(cheatData);
-    //   }
-    // }
-  
     // DATAMUSE LOOKUP 
     export const CheatLookUpHelper = async (cheatWord, letters, errorHandler) => {
-        const sortedCheatWord = letters.sort().join('');
         const pattern = cheatWord.map((letter) => (letter === '' ? '.' : letter));
         const regexPattern = pattern.join('');
         const regex = new RegExp(`^${regexPattern}$`, 'i');
-        
-        let datamusePrep = '';
-      
-        cheatWord.forEach(item => {
-          datamusePrep += item === '' ? '?' : item;
-        });
-        
-        if (/^\?*$/.test(datamusePrep)) {
-          datamusePrep = '//' + letters.join('');
-        }
+        const datamusePrep = '//' + letters.join('');
       
         try {
-          const response = await fetch(`https://api.datamuse.com/words?sp=${datamusePrep}&max=1000&md=d`);
+          const response = await fetch(`https://api.datamuse.com/words?sp=${datamusePrep}&max=100&md=d`);
           if (!response.ok) {
-            throw new Error(`There aren't any results on datamuse for that collection of letters (${response.status})`);
+            throw new CustomError('Error', `There is a problem at datamuse (${response.status})`);
           }
       
           const data = await response.json();
-          ;
+          console.log("API Response:", data);
+;
+
+          if (data.length === 0){
+            throw new CustomError('Nothing found', `There aren't any results on datamuse for that collection of letters`);
+          }
       
           const filteredData = data.filter(item => {
-            const matchCondition = regex.test(item.word) && HasSameLetters(item.word, sortedCheatWord);
+            const matchCondition = regex.test(item.word) && item.defs;
             return matchCondition;
           });
+          
       
-          if (filteredData === undefined || filteredData.length === 0) {
-            throw new Error(`There are no anagram matches for this lot of letters - soz`)
+          if (filteredData.length === 0) {
+            throw new CustomError('Nothing with the letters added', `There are no anagram matches for this lot of letters - soz ${filteredData}`)
           }
           const cheatData = filteredData.map(item => ({
             word: item.word,
