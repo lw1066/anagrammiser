@@ -39,10 +39,10 @@ const FinalAnagram = (props) => {
             </p>
             <p className={classes.mixLetters}>{ana}</p>
             <div className={classes.actions}>
-                <Button onClick={mixTheLetters} type='button'>Mix it up!</Button>
-                <Button onClick={props.dictLookUp} type='button'>use the dictionary</Button>
+                <Button onClick={mixTheLetters} type='button'>Mix!</Button>
+                <Button onClick={props.dictLookUp} type='button'>Dictionary</Button>
                 <Button onClick={() => props.cheatLookUp(letterData, props.letters)} type='button'>Cheat!</Button>
-                <Button className={classes.reset} onClick={props.resetAna} type='button'>Start over!</Button>
+                <Button className={classes.reset} onClick={props.resetAna} type='button'>Reset</Button>
             </div>
         </div>
     );
