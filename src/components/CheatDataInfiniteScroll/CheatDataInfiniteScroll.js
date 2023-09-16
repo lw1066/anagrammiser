@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Button from '../../UI/Button/Button';
 import { CheatScrollerItem } from '../CheatScrollerItem/CheatScrollerItem';
 import classes from './CheatDataInfiniteScroll.module.css';
@@ -9,41 +9,45 @@ export const CheatDataInfiniteScroll = (props) => {
     const batchSize = 20; // Set your batch size here
 
     // Function to load items initially and when "Load More" is clicked
-    const loadItems = () => {
+    const loadItems = useCallback(() => {
         const newVisibleItems = props.cheatData.slice(0, offset + batchSize);
         setVisibleItems(newVisibleItems);
-        setOffset(offset + batchSize);
-    };
+    }, [props.cheatData, offset, batchSize]);
 
-    // Load items initially when the component mounts
+    // Load initial items when the component mounts
     useEffect(() => {
         loadItems();
-    }, []);
+    }, [loadItems]);
 
     // Function to load more items when "Load More" is clicked
     const loadMoreItems = () => {
-        loadItems();
+        const newOffset = offset + batchSize;
+        if (newOffset < props.cheatData.length) {
+            setOffset(newOffset);
+        }
     };
+
+    // Determine whether to show the "Load More" button based on available data
+    const showLoadMoreButton = offset + batchSize < props.cheatData.length;
 
     return (
         <div>
-            <div className={classes.backdrop} onClick={props.onConfirm}/>
+            <div className={classes.backdrop} onClick={props.onConfirm} />
             <div className={classes.modal}>
                 <header className={classes.header}>
-                    <h2>{props.cheatData.length === 0 ? 'No' : props.cheatData.length} anagram{props.cheatData.length > 1 ? 's': ''} found of these letters: {props.letters} </h2>
+                    <h2>{props.cheatData.length === 0 ? 'No' : props.cheatData.length} anagram{props.cheatData.length > 1 ? 's' : ''} found of these letters: {props.letters} </h2>
                 </header>
                 <div className={classes.content}>
                     <div>
                         <div style={{ height: "40vh", overflowY: "scroll" }}>
                             {visibleItems.map((item, index) => (
-                                <div key={index}><CheatScrollerItem word={item.word} defs={item.defs} /></div>
+                                <CheatScrollerItem key={index} word={item.word} defs={item.defs} />
                             ))}
                         </div>
-                        
-                    </div>  
+                    </div>
                 </div>
                 <footer className={classes.actions}>
-                    {offset < props.cheatData.length && (
+                    {showLoadMoreButton && (
                         <div className={classes.loadMoreButton}>
                             <Button onClick={loadMoreItems}>Load More</Button>
                         </div>
