@@ -5,8 +5,10 @@
         const pattern = cheatWord.map((letter) => (letter === '' ? '.' : letter));
         const regexPattern = pattern.join('');
         const regex = new RegExp(`^${regexPattern}$`, 'i');
-        const datamusePrep = '//' + letters.join('');
-      
+        const datamusePrep = '//' + letters.join('') + '//';
+
+        console.log(`datamusePrep: ${datamusePrep}`)
+
         try {
           const response = await fetch(`https://api.datamuse.com/words?sp=${datamusePrep}&max=100&md=d`);
           if (!response.ok) {
@@ -25,7 +27,6 @@
             const matchCondition = regex.test(item.word) && item.defs;
             return matchCondition;
           });
-          
       
           if (filteredData.length === 0) {
             throw new CustomError('Nothing with the letters added', `There are no anagram matches for this lot of letters - soz ${filteredData}`)

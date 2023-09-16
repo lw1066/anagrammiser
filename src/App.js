@@ -12,7 +12,8 @@ import { GetDefinitionHelper } from "./services/GetDefinitionHelper";
 import { useErrorState } from './UI/ErrorModal/useErrorState';
 import{ CheatDataInfiniteScroll } from './components/CheatDataInfiniteScroll/CheatDataInfiniteScroll.js';
 import { CheatLookUpHelper } from './services/CheatLookUpHelper';
-// import output from './assets/output.json'; IMPORT FOR LOCAL DICTIONARY USE
+import { LocalCheatLookUpHelper } from './services/LocalCheatlookUpHelper';
+
 
 function App() {
   const { error, removeErrorHandler, errorHandler } = useErrorState();
@@ -62,10 +63,17 @@ function App() {
     setCheatData(undefined);
   }
 
-  const cheatLookUpHandler = async ( cheatWord,letters) => {
-    const data = await CheatLookUpHelper(cheatWord, letters, errorHandler);
+  const cheatLookUpHandler = async (cheatWord, letters) => {
+    let data;
+  
+    if (letters.length >= 15) {
+      data = await LocalCheatLookUpHelper(cheatWord, letters, errorHandler);
+    } else {
+      data = await CheatLookUpHelper(cheatWord, letters, errorHandler);
+    }
+  
     setCheatData(data);
-  }; 
+  };
 
   return (
     <div>

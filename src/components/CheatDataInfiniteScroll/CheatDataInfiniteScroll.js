@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Button from '../../UI/Button/Button';
-import { CheatScrollerItem } from '../CheatScrollerItem';
+import { CheatScrollerItem } from '../CheatScrollerItem/CheatScrollerItem';
 import classes from './CheatDataInfiniteScroll.module.css';
 
 
@@ -10,7 +10,6 @@ export const CheatDataInfiniteScroll = (props) => {
     const [offset, setOffset] = useState(0);
     const containerRef = useRef(null);
     const anagramNumber = props.cheatData.length
-    
     
     const loadMoreItems = useCallback(() => {
         const batchSize = 20; // You can adjust the batch size
@@ -52,7 +51,7 @@ export const CheatDataInfiniteScroll = (props) => {
             <div className={classes.backdrop} onClick={props.onConfirm}/>
                 <div className={classes.modal}>
                     <header className={classes.header}>
-                        <h2>{anagramNumber} anagram{anagramNumber > 1 ? 's': ''} found of these letters: {props.letters} </h2>
+                        <h2>{anagramNumber === 0 ? 'No' : anagramNumber} anagram{anagramNumber > 1 ? 's': ''} found of these letters: {props.letters} </h2>
                     </header>
                     <div className={classes.content}>
                         <div>
