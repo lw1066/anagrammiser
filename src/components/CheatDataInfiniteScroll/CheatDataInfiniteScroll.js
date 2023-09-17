@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Button from '../../UI/Button/Button';
-import { CheatScrollerItem } from '../CheatScrollerItem/CheatScrollerItem';
+// import { CheatScrollerItem } from '../CheatScrollerItem/CheatScrollerItem';
 import classes from './CheatDataInfiniteScroll.module.css';
 
 export const CheatDataInfiniteScroll = (props) => {
@@ -39,11 +39,15 @@ export const CheatDataInfiniteScroll = (props) => {
                 </header>
                 <div className={classes.content}>
                     <div>
-                        <div style={{ height: "40vh", overflowY: "scroll" }}>
+                        <ul style={{ height: "40vh", overflowY: "scroll" }}>
                             {visibleItems.map((item, index) => (
-                                <CheatScrollerItem key={index} word={item.word} defs={item.defs} />
+                                <><li key={index}>{item.word}</li><ul>
+                                    {item.defs.map((definition, i) => (
+                                        <li className={classes.definition} key={i}>{definition}</li>
+                                    ))}
+                                </ul></>
                             ))}
-                        </div>
+                        </ul>
                     </div>
                 </div>
                 <footer className={classes.actions}>
