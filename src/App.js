@@ -24,7 +24,7 @@ function App() {
   const [cheatData, setCheatData] = useState(undefined);
 
   const anagrammiserHandler = (letters) => {
-    letters = letters.split("");
+    letters = letters.toLowerCase().split("");
     setLetters(letters);
   };
 

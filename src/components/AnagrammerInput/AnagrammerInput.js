@@ -15,15 +15,16 @@ const AnagrammerInput = (props) => {
     const anagrammiseHandler = (event) => {
         event.preventDefault();
         const checkRegex = /^[A-Za-z]+$/;
-        if (!letters) {
+        const trimmedLetters = letters.trim()
+        if (!trimmedLetters) {
             props.onError('No letters!', 'Put some letters in to anagrammise');
             return
         };
-        if (!letters.match(checkRegex)) {
+        if (!trimmedLetters.match(checkRegex)) {
             props.onError('Not letters!', 'You can only anagrammise letters - be careful');
             return
         };
-        props.onAnagrammise(letters);
+        props.onAnagrammise(trimmedLetters);
         setLetters('');
 ;    };
 
