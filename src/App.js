@@ -13,6 +13,10 @@ import { useErrorState } from './UI/ErrorModal/useErrorState';
 import{ CheatDataInfiniteScroll } from './components/CheatDataInfiniteScroll/CheatDataInfiniteScroll.js';
 import { CheatLookUpHelper } from './services/CheatLookUpHelper';
 import { LocalCheatLookUpHelper } from './services/LocalCheatlookUpHelper';
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
+import AuthButton from './components/AuthButton';
+
 
 
 function App() {
@@ -75,8 +79,12 @@ function App() {
     setCheatData(data);
   };
 
+  const { user } = useContext(AuthContext);
+
   return (
     <div>
+      <p>{user?.email}</p>
+      <AuthButton />
       <Helmet>
         <meta charSet="utf-8" />
         <title>Anagrammiser</title>
