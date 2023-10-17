@@ -15,7 +15,7 @@ import { CheatLookUpHelper } from './services/CheatLookUpHelper';
 import { LocalCheatLookUpHelper } from './services/LocalCheatlookUpHelper';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
-import AuthButton from './components/AuthButton';
+import AuthButton from './components/AuthButton/AuthButton';
 
 
 
@@ -26,6 +26,9 @@ function App() {
   const [dictionaryDisplay, setDictionaryDisplay] = useState([]);
   const [dictLook, setDictLook] = useState(false);
   const [cheatData, setCheatData] = useState(undefined);
+  const { user } = useContext(AuthContext);
+
+  console.log(user)
 
   const anagrammiserHandler = (letters) => {
     letters = letters.toLowerCase().split("");
@@ -79,11 +82,10 @@ function App() {
     setCheatData(data);
   };
 
-  const { user } = useContext(AuthContext);
 
   return (
     <div>
-      <p>{user?.email}</p>
+      <p style={{color:"white"}}>{user?.email}</p>
       <AuthButton />
       <Helmet>
         <meta charSet="utf-8" />
@@ -99,10 +101,10 @@ function App() {
           onConfirm={removeErrorHandler}
         />
       )}
-      <AnagrammerInput
+      {user &&<AnagrammerInput
         onAnagrammise={anagrammiserHandler}
         onError={errorHandler}
-      />
+      />}
       <AnagramDisplay
         letters={letters}
         onLetterSubmit={letterSubmitHandler}
