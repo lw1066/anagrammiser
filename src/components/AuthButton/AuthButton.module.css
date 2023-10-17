@@ -1,17 +1,20 @@
 
 .header {
     display:flex;
-    justify-content: end;
+    justify-content:flex-end;
 }
 
 .button {
-    padding: 0.5rem 1rem;
+    padding: clamp( 5px, 2vw, 15px);
     border: none;
     border-radius: 100px;
     background: linear-gradient(180deg, #018c08, #63ce65);
     color: #fdfefe;
     font-family: 'Roboto Condensed', sans-serif;
     cursor: pointer;
+    margin-right: 2vw;
+    font-size: calc(8px + 1.75vw);
+    
     
   }
   

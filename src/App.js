@@ -28,7 +28,7 @@ function App() {
   const [cheatData, setCheatData] = useState(undefined);
   const { user } = useContext(AuthContext);
 
-  console.log(user)
+  
 
   const anagrammiserHandler = (letters) => {
     letters = letters.toLowerCase().split("");
