@@ -13,10 +13,6 @@ import { useErrorState } from './UI/ErrorModal/useErrorState';
 import{ CheatDataInfiniteScroll } from './components/CheatDataInfiniteScroll/CheatDataInfiniteScroll.js';
 import { CheatLookUpHelper } from './services/CheatLookUpHelper';
 import { LocalCheatLookUpHelper } from './services/LocalCheatlookUpHelper';
-import { useContext } from 'react';
-import { AuthContext } from './context/AuthContext';
-import AuthButton from './components/AuthButton/AuthButton';
-
 
 
 function App() {
@@ -26,10 +22,7 @@ function App() {
   const [dictionaryDisplay, setDictionaryDisplay] = useState([]);
   const [dictLook, setDictLook] = useState(false);
   const [cheatData, setCheatData] = useState(undefined);
-  const { user } = useContext(AuthContext);
-
-  
-
+ 
   const anagrammiserHandler = (letters) => {
     letters = letters.toLowerCase().split("");
     setLetters(letters);
@@ -54,12 +47,13 @@ function App() {
     setCheatData(undefined);
   };
 
-  const DictLookUpHandler = async (word) => {
-    const data = await GetDefinitionHelper(word, errorHandler); //DO IT THIS WAY - separate out services into services folder
-    if(!data || data.length===0) {
-      return
-    } ;
-    setDictionaryDisplay(data);
+  const DictLookUpHandler = async (word, errorHandler) => {
+    try {
+      const data = await GetDefinitionHelper(word, errorHandler);
+      setDictionaryDisplay(data);
+    } catch (err) {
+      errorHandler(err.name, err.message);
+    }
   };
   
   const removeDisplayHandler = () => {
@@ -85,8 +79,8 @@ function App() {
 
   return (
     <div>
-      <p style={{color:"white"}}>{user?.email}</p>
-      <AuthButton />
+      {/* <p style={{color:"white"}}>{user?.email}</p> */}
+      {/* <AuthButton /> */}
       <Helmet>
         <meta charSet="utf-8" />
         <title>Anagrammiser</title>
@@ -101,7 +95,7 @@ function App() {
           onConfirm={removeErrorHandler}
         />
       )}
-      {user &&<AnagrammerInput
+      {!letters && <AnagrammerInput
         onAnagrammise={anagrammiserHandler}
         onError={errorHandler}
       />}

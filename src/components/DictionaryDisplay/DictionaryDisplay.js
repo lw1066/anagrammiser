@@ -4,7 +4,7 @@ import classes from './DictionaryDisplay.module.css';
 
 
 const DictionaryDisplay = (props) => {
-    console.log(props.wordDisplay)
+    console.log('in dd', props.wordDisplay)
 
     return (
         <div>

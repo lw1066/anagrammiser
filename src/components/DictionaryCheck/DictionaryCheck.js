@@ -4,7 +4,7 @@ import classes from '../AnagrammerInput/AnagrammerInput.module.css';
 import Button from '../../UI/Button/Button';
 
 
-const AnagrammerInput = (props) => {
+const DictionaryCheck = (props) => {
 
     const [letters, setLetters] = useState('');
 
@@ -23,7 +23,7 @@ const AnagrammerInput = (props) => {
             props.onError('Not letters!', "You can't check stuff that ain't letters");
             return
         };
-        props.onDictLookUp(letters)    
+        props.onDictLookUp(letters, props.onError)    
 ;    };
 
 
@@ -43,4 +43,4 @@ const AnagrammerInput = (props) => {
     )
 };
 
-export default AnagrammerInput
+export default DictionaryCheck
