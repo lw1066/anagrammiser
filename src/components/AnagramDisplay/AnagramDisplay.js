@@ -11,35 +11,27 @@ const AnagramDisplay = (props) => {
 
     const letterHandler = (event) => {
         event.preventDefault();
-        let list = [];
-        let data = props.letters.map(item => item.toLowerCase());
+    
+        // Select all input elements within the form
+        const inputElements = event.target.querySelectorAll('input[type="text"]');
+      
+        // Map over the input elements to extract their values
+        const list = Array.from(inputElements).map(input => input.value.toLowerCase().trim());
         
-        for (let i=0; i<data.length; i++) {
-            list.push(event.target[i].value.toLowerCase())
-        };
-
-        //validate input - only allow letters from original input
-        for (let i=0; i<data.length; i++) {
-            if (data.includes(list[i])) {
-                const indexToRemove = data.indexOf(list[i]);
-                if (indexToRemove !== -1) {
-                    data.splice(indexToRemove, 1)
-                    continue
-                } 
-            } else if (list[i] === '') {
-                continue;
-            } else {
+        // Validate input
+        const data = props.letters.map(item => item.toLowerCase());
+        for (let i = 0; i < list.length; i++) {
+            if (!data.includes(list[i]) && list[i] !== '') {
                 props.onError('Wrong letters!', 'Please check the letters are in your original anagram');
-               
-                
                 return;
             }
         }
+        
         props.onLetterSubmit(list);
     };
 
     return (
-        <form onSubmit={letterHandler}className={classes.aform}>
+        <form onSubmit={letterHandler} className={classes.aform}>
             <p>Add letters you know ({props.letters}):</p>
             <div className={classes.letters}>
                 {props.letters.map((letter, index) => (

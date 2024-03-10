@@ -41,7 +41,7 @@ function App() {
   };
 
   const resetAnaHandler = () => {
-    setAnaLetters({});
+    setAnaLetters({ul:'' , ld: '' });
     setLetters("");
     setDictLook(false);
     setCheatData(undefined);
@@ -79,11 +79,10 @@ function App() {
 
   return (
     <div>
-      {/* <p style={{color:"white"}}>{user?.email}</p> */}
-      {/* <AuthButton /> */}
+
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Anagrammiser</title>
+        <title>Ana-gram-miser</title>
         <link rel="canonical" href="http://anagrammiser.netlify.app" />
         <meta name="description" content="Anagram solver" />
       </Helmet>
@@ -99,11 +98,11 @@ function App() {
         onAnagrammise={anagrammiserHandler}
         onError={errorHandler}
       />}
-      <AnagramDisplay
+      {anaLetters && (<AnagramDisplay
         letters={letters}
         onLetterSubmit={letterSubmitHandler}
         onError={errorHandler}
-      />
+      />)}
       {letters && (
         <FinalAnagram
           anaLetters={anaLetters}
