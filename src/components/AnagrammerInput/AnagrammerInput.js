@@ -36,7 +36,7 @@ const AnagrammerInput = ({ onError, onAnagrammise }) => {
 
   return (
     <form onSubmit={anagrammiseHandler} className={classes.form}>
-      <label>Type in your letters (use ? for unknown letters)</label>
+      <label>Type in your letters (?&nbsp;for&nbsp;unknown)</label>
       <input
         onChange={changeHandler}
         value={letters}

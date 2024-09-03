@@ -104,7 +104,7 @@ function App() {
       {showWelcomeText && (
         <div
           style={{
-            color: "orange",
+            color: "#ed800f",
             width: "50%",
             margin: "0 auto",
             textAlign: "center",

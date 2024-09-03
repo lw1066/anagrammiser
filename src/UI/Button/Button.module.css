@@ -1,17 +1,18 @@
 .button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 50px;
-    background: linear-gradient(180deg, #018c08, #63ce65);
-    color: #fdfefe;
-    font-family: 'Roboto Condensed', sans-serif;
-    cursor: pointer;
-  }
-  
+  padding: 0.5rem 1rem;
+  /* border: 1px 1px 1px black; */
+  box-shadow: 2px 2px 2px black;
+  border-radius: 50px;
+  background: linear-gradient(180deg, #edb50f, #ff8400);
+  color: #fdfefe;
+  font-family: "Roboto Condensed", sans-serif;
+  cursor: pointer;
+}
+
 .button:hover {
   background: linear-gradient(180deg, #044f08, #437b45);
 }
-  
+
 .resetButton {
   background-color: red;
 }

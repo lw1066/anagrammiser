@@ -39,7 +39,17 @@ const AnagramDisplay = ({ letters, onError, onLetterSubmit }) => {
 
   return (
     <form onSubmit={letterHandler} className={classes.aform}>
-      <p>Position any letters ({letters}):</p>
+      <p
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.95)",
+          borderRadius: ".25rem",
+          padding: "5px",
+          margin: "5px",
+          color: "#ed800f",
+        }}
+      >
+        Position any letters ({letters})
+      </p>
       <div className={classes.letters}>
         {letters.map((letter, index) => (
           <input type="text" id={index} key={index} size="1" maxLength="1" />

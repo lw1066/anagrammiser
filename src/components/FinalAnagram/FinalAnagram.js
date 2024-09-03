@@ -37,43 +37,50 @@ const FinalAnagram = ({
   };
 
   return (
-    <div className={classes.anag}>
-      <p className={classes.spaces}>
-        {letterData.map((item, index) =>
-          item ? (
-            <span className={classes.letters} key={index}>
-              {item}
-            </span>
-          ) : (
-            <span className={classes.letters} key={index}>
-              _
-            </span>
-          )
-        )}
-      </p>
-      <p className={classes.mixLetters}>{ana}</p>
-      <div className={classes.actions}>
-        <Button onClick={mixTheLetters} type="button">
-          Mix
-        </Button>
-        <Button onClick={dictLookUp} type="button">
-          Dictionary
-        </Button>
-        <Button onClick={() => cheatLookUp(letterData, letters)} type="button">
-          Cheat!
-        </Button>
-        <Button
-          className={classes.reset}
-          onClick={resetAnaLetters}
-          type="button"
-        >
-          Back
-        </Button>
-        <Button className={classes.reset} onClick={resetAna} type="button">
-          Restart
-        </Button>
+    <>
+      <div className="anagram">
+        <p className={classes.spaces}>
+          {letterData.map((item, index) =>
+            item ? (
+              <span className={classes.letters} key={index}>
+                {item}
+              </span>
+            ) : (
+              <span className={classes.letters} key={index}>
+                _
+              </span>
+            )
+          )}
+        </p>
+        <p className={classes.mixLetters}>{ana}</p>
       </div>
-    </div>
+      <div className={classes.anag}>
+        <div className={classes.actions}>
+          <Button onClick={mixTheLetters} type="button">
+            Mix
+          </Button>
+          <Button onClick={dictLookUp} type="button">
+            Dictionary
+          </Button>
+          <Button
+            onClick={() => cheatLookUp(letterData, letters)}
+            type="button"
+          >
+            Cheat!
+          </Button>
+          <Button
+            className={classes.reset}
+            onClick={resetAnaLetters}
+            type="button"
+          >
+            Back
+          </Button>
+          <Button className={classes.reset} onClick={resetAna} type="button">
+            Restart
+          </Button>
+        </div>
+      </div>
+    </>
   );
 };
 
