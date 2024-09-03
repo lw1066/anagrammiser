@@ -1,71 +1,75 @@
 .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 10;
-    background: rgba(0, 0, 0, 0.75);
-}
-  
-.modal {
-    position: absolute;
-    top: 15vh;
-    left: 20vw;
-    width: 60vw;
-    z-index: 100;
-    overflow: hidden;
-    background: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.26);
-    border-radius: 10px;
-    
-   
-}
-  
-.header {
-    background: #f57905;
-    padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
 }
 
-  
-.header h2 {
-    margin: 0;
-    color: white;
+.modal {
+  position: absolute;
+  top: 15vh;
+  left: 20vw;
+  width: 60vw;
+  z-index: 100;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
 }
-  
+
+.header {
+  background: #f57905;
+  padding: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  color: white;
+}
+
 .content {
-    padding: .25rem;
-    margin: .5rem;
+  padding: 0.25rem;
+  margin: 0.5rem;
 }
 
 .content ul {
-    padding: .25rem;
+  padding: 0.25rem;
 }
-  
+
 .actions {
-    padding: 1rem;
-    display: flex;
-    justify-content: space-around;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
 }
-  
+
 .word {
-    display:flex;
-    flex-direction: column;
-    font-size: 1rem;
-    font-weight: 400;
-    text-align: left;
-    padding: .5rem;
-    margin: 0;
-    font-weight: 400; 
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+  padding: 0.5rem;
+  margin: 0;
+  font-weight: 400;
 }
 
 .definition {
-    font-size: .75rem;
-    text-align: left;
-    
+  font-size: 0.75rem;
+  text-align: left;
 }
 
 .item {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
+}
+
+@media (max-width: 468px) {
+  .modal {
+    width: 90vw;
+    left: 5vw;
+    top: 5vh;
+  }
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classes from "./AnagrammerInput.module.css";
 import Button from "../../UI/Button/Button";
 
-const AnagrammerInput = (props) => {
+const AnagrammerInput = ({ onError, onAnagrammise }) => {
   const [letters, setLetters] = useState("");
 
   const changeHandler = (event) => {
@@ -12,29 +12,26 @@ const AnagrammerInput = (props) => {
   const anagrammiseHandler = (event) => {
     event.preventDefault();
 
-    // Updated regex to allow letters and '?'
     const checkRegex = /^[A-Za-z?]+$/;
     const trimmedLetters = letters.trim();
 
     if (!trimmedLetters) {
-      props.onError("No letters!", "Put some letters in to anagrammise");
+      onError("No letters!", "Put some letters in to anagrammise");
       return;
     }
     if (!trimmedLetters.match(checkRegex)) {
-      props.onError(
+      onError(
         "Invalid characters!",
         "You can only use letters and ? (for unknown letters)"
       );
       return;
     }
 
-    // Replace any extra spaces around the '?' with a single space
     const formattedLetters = trimmedLetters
       .replace(/\s+/g, " ")
       .replace(/\s*\?\s*/g, "?");
 
-    props.onAnagrammise(formattedLetters);
-    setLetters("");
+    onAnagrammise(formattedLetters);
   };
 
   return (

@@ -9,20 +9,21 @@ import DictionaryCheck from "./components/DictionaryCheck/DictionaryCheck";
 import { Helmet } from "react-helmet";
 import DictionaryDisplay from "./components/DictionaryDisplay/DictionaryDisplay";
 import { GetDefinitionHelper } from "./services/GetDefinitionHelper";
-import { useErrorState } from './UI/ErrorModal/useErrorState';
-import{ CheatDataInfiniteScroll } from './components/CheatDataInfiniteScroll/CheatDataInfiniteScroll.js';
-import { CheatLookUpHelper } from './services/CheatLookUpHelper';
-import { LocalCheatLookUpHelper } from './services/LocalCheatlookUpHelper';
-
+import { useErrorState } from "./UI/ErrorModal/useErrorState";
+import { CheatDataInfiniteScroll } from "./components/CheatDataInfiniteScroll/CheatDataInfiniteScroll.js";
+import { CheatLookUpHelper } from "./services/CheatLookUpHelper";
+import { LocalCheatLookUpHelper } from "./services/LocalCheatlookUpHelper";
+import Button from "./UI/Button/Button.js";
 
 function App() {
   const { error, removeErrorHandler, errorHandler } = useErrorState();
   const [letters, setLetters] = useState("");
-  const [anaLetters, setAnaLetters] = useState([]);
+  const [anaLetters, setAnaLetters] = useState({ ul: "", ld: "" });
   const [dictionaryDisplay, setDictionaryDisplay] = useState([]);
   const [dictLook, setDictLook] = useState(false);
   const [cheatData, setCheatData] = useState(undefined);
- 
+  const [showWelcomeText, setShowWelcomeText] = useState(true);
+
   const anagrammiserHandler = (letters) => {
     letters = letters.toLowerCase().split("");
     setLetters(letters);
@@ -41,8 +42,15 @@ function App() {
   };
 
   const resetAnaHandler = () => {
-    setAnaLetters({ul:'' , ld: '' });
+    setAnaLetters({ ul: "", ld: "" });
     setLetters("");
+    setDictLook(false);
+    setCheatData(undefined);
+  };
+
+  const resetAnaLetters = () => {
+    setAnaLetters({ ul: "", ld: "" });
+
     setDictLook(false);
     setCheatData(undefined);
   };
@@ -55,31 +63,29 @@ function App() {
       errorHandler(err.name, err.message);
     }
   };
-  
+
   const removeDisplayHandler = () => {
     setDictionaryDisplay([]);
   };
 
   const removeCheatDisplayHandler = () => {
     setCheatData(undefined);
-  }
+  };
 
   const cheatLookUpHandler = async (cheatWord, letters) => {
     let data;
-  
+
     if (letters.length >= 15) {
       data = await LocalCheatLookUpHelper(cheatWord, letters, errorHandler);
     } else {
       data = await CheatLookUpHelper(cheatWord, letters, errorHandler);
     }
-  
+
     setCheatData(data);
   };
 
-
   return (
     <div>
-
       <Helmet>
         <meta charSet="utf-8" />
         <title>Ana-gram-miser</title>
@@ -94,19 +100,50 @@ function App() {
           onConfirm={removeErrorHandler}
         />
       )}
-      {!letters && <AnagrammerInput
-        onAnagrammise={anagrammiserHandler}
-        onError={errorHandler}
-      />}
-      {anaLetters && (<AnagramDisplay
-        letters={letters}
-        onLetterSubmit={letterSubmitHandler}
-        onError={errorHandler}
-      />)}
+
+      {showWelcomeText && (
+        <div
+          style={{
+            color: "orange",
+            width: "50%",
+            margin: "0 auto",
+            textAlign: "center",
+          }}
+        >
+          <p>If you have an anagram, enter all the letters to get started.</p>
+          <p>
+            If you are missing some letters, enter ? for each missing letter.
+            Then put the letters you know in the correct positions and press the
+            cheat button to see any words that fit the pattern.
+          </p>
+          <Button
+            onClick={() => {
+              setShowWelcomeText(false);
+            }}
+          >
+            Let's Go
+          </Button>
+        </div>
+      )}
+
+      {!letters && !showWelcomeText && anaLetters.ul.length === 0 && (
+        <AnagrammerInput
+          onAnagrammise={anagrammiserHandler}
+          onError={errorHandler}
+        />
+      )}
+      {letters && anaLetters.ul.length === 0 && (
+        <AnagramDisplay
+          letters={letters}
+          onLetterSubmit={letterSubmitHandler}
+          onError={errorHandler}
+        />
+      )}
       {letters && (
         <FinalAnagram
           anaLetters={anaLetters}
           resetAna={resetAnaHandler}
+          resetAnaLetters={resetAnaLetters}
           dictLookUp={() => setDictLook(true)}
           cheatLookUp={cheatLookUpHandler}
           letters={letters}
@@ -125,12 +162,12 @@ function App() {
         />
       )}
       {cheatData && (
-      <CheatDataInfiniteScroll
-      cheatData={cheatData}
-      letters={letters}
-      onConfirm={removeCheatDisplayHandler}
-      />
-    )}
+        <CheatDataInfiniteScroll
+          cheatData={cheatData}
+          letters={letters}
+          onConfirm={removeCheatDisplayHandler}
+        />
+      )}
     </div>
   );
 }
