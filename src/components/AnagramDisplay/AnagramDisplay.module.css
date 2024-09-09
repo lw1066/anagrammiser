@@ -2,19 +2,27 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  font-size: x-large;
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
+  margin: 20px auto;
   color: #ed800f;
 }
 
 .letters input {
-  margin: 0.5rem 0.15rem;
-  border-radius: 5px;
   text-align: center;
-  text-transform: uppercase;
-  width: 1.5rem;
+  padding: 1px;
+  font-size: 1rem;
+  width: auto;
+  max-width: 2rem;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   color: #ed800f;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.letters input:focus {
+  transform: scale(1.2);
 }
 
 .aform {
@@ -25,7 +33,7 @@
   background-image: url("/public/alpha-spag.jpg");
   background-size: cover;
   border-radius: 12px;
-  width: 30rem;
+  width: 80%;
   height: 10rem;
   margin: 0.1rem auto;
   font-size: 1.25rem;
@@ -40,8 +48,8 @@
 
 @media screen and (max-width: 612px) {
   .aform {
-    width: 25rem;
-    max-width: 90vw;
+    width: 80%;
+    max-width: 90%;
     height: 12rem;
     font-size: 1rem;
   }
@@ -54,24 +62,20 @@
 
 @media screen and (max-width: 414px) {
   .aform {
-    width: 18rem;
+    max-width: 100%;
+    width: 100%;
     font-size: 1rem;
     text-align: center;
+    border-radius: 0;
+    height: 35vh;
   }
+
+  .letters {
+    gap: 0px; /* Reduce gap on smaller screens */
+  }
+
   .letters input {
-    width: 1rem;
+    width: auto;
+    max-width: 2rem;
   }
 }
-
-/* @media screen and (max-width: 768px) {
-  .aform {
-    max-width: 90vw;
-    font-size: 0.5rem;
-    padding: 0.25rem;
-  }
-  .letters input {
-    width: 1.25rem;
-    font-size: 0.75rem;
-    margin: 0.5rem 0.005rem;
-  }
-} */

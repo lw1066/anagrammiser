@@ -21,21 +21,30 @@ const AnagramDisplay = ({ letters, onError, onLetterSubmit }) => {
     // Validate input
     const data = letters.map((item) => item.toLowerCase());
     for (let i = 0; i < list.length; i++) {
-      if (!data.includes(list[i]) && list[i] !== "") {
+      if (list[i] === "?") {
+        onError("Only include known letters!", "Don't add unknowns - ?");
+        return;
+      }
+
+      const index = data.indexOf(list[i]);
+      if (index === -1 && list[i] !== "") {
         onError(
           "Wrong letters!",
           "Please check the letters are in your original anagram"
         );
         return;
       }
-      if (list[i] === "?") {
-        onError("Only include known letters!", "Don't add unknowns - ?");
-        return;
+
+      if (index !== -1) {
+        data.splice(index, 1); // Remove the letter to prevent further matches
       }
     }
 
     onLetterSubmit(list);
   };
+
+  // Calculate flex-basis based on the number of letters
+  const inputWidthPercentage = `${100 / letters.length - 3}%`;
 
   return (
     <form onSubmit={letterHandler} className={classes.aform}>
@@ -52,7 +61,18 @@ const AnagramDisplay = ({ letters, onError, onLetterSubmit }) => {
       </p>
       <div className={classes.letters}>
         {letters.map((letter, index) => (
-          <input type="text" id={index} key={index} size="1" maxLength="1" />
+          <input
+            type="text"
+            id={index}
+            key={index}
+            size="1"
+            maxLength="1"
+            style={{
+              flexBasis: inputWidthPercentage,
+              margin: "2px",
+              textAlign: "center",
+            }}
+          />
         ))}
       </div>
       <div className={classes.actions}>
